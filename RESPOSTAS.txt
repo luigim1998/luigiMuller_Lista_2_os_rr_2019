@@ -1,0 +1,18 @@
+1) Explique a função dos Sistemas de Arquivos. Adicionalmente, descreva a diferença entre o sistema de arquivos do linux e do windows.
+É a parte do sistema operacional que lida com os arquivos. Ele fica responsável pela organização dos arquivos no disco, estrutura, forma de acesso, uso e como deve ser nomeado os arquivos.
+No Windows 95, é usado o FAT16, o Windows 98 introduziu o FAT32 e os sistemas Windows após isso passaram a usar o NTFS, dando suporte ao FAT. O exFAT é uma extensão do FAT32 otimizado para flash drivers e sistemas de arquivos grandes quando o sistema de arquivos NTFS não for uma solução viável.
+No Linux, há mais sistemas de arquivos, os mais usados são EXT3 e EXT4, outros exemplos são ReiserFS, XFS e JSF.
+
+O Windows utiliza as extensões como forma de saber a qual programa deve executá-lo, enquanto outros, como o Linux, não obriga a necessidade de uma extensão, podendo ser usada pela demanda do usuário.
+Em relação a caracteres:
+Os sistemas FAT não são case sensitive, sendo que o FAT-16 suporta nomes de até 8 caracteres mais extensão de 1 a 3 caracteres e o FAT-32 suporta nomes de até 256 bits.
+O NTFS utiliza caracteres Unicode, diferentemente do FAT que usa ASCII, apresenta suporte a criptografia e segurança.
+O ext4 apresenta compatibilidade com o ext3 e também apresenta novos recursos de confiabilidade e desempenho, como a utilização de estruturas mais rápidas na organização de diretórios e redução de fragmentação de arquivos.
+ 
+
+Referências: livro do Tanembaun
+https://www.techtudo.com.br/dicas-e-tutoriais/noticia/2016/02/entenda-o-que-e-sistema-de-arquivos-e-sua-utilidade-no-pc-e-no-celular.html
+https://pt.wikipedia.org/wiki/ExFAT
+https://pt.wikipedia.org/wiki/File_Allocation_Table
+https://pt.wikipedia.org/wiki/NTFS
+https://www.ibm.com/developerworks/br/library/l-anatomy-ext4/index.html
