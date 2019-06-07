@@ -1,16 +1,23 @@
-1) Explique a funÁ„o dos Sistemas de Arquivos. Adicionalmente, descreva a diferenÁa entre o sistema de arquivos do linux e do windows.
-… a parte do sistema operacional que lida com os arquivos. Ele fica respons·vel pela organizaÁ„o dos arquivos no disco, estrutura, forma de acesso, uso e como deve ser nomeado os arquivos.
-No Windows 95, È usado o FAT16, o Windows 98 introduziu o FAT32 e os sistemas Windows apÛs isso passaram a usar o NTFS, dando suporte ao FAT. O exFAT È uma extens„o do FAT32 otimizado para flash drivers e sistemas de arquivos grandes quando o sistema de arquivos NTFS n„o for uma soluÁ„o vi·vel.
-No Linux, h· mais sistemas de arquivos, os mais usados s„o EXT3 e EXT4, outros exemplos s„o ReiserFS, XFS e JSF.
+1) Explique a fun√ß√£o dos Sistemas de Arquivos. Adicionalmente, descreva a diferen√ßa entre o sistema de arquivos do linux e do windows.
+√â a parte do sistema operacional que lida com os arquivos. Ele fica respons√°vel pela organiza√ß√£o dos arquivos no disco, estrutura, forma de acesso, uso e como deve ser nomeado os arquivos.
+No Windows 95, √© usado o FAT16, o Windows 98 introduziu o FAT32 e os sistemas Windows ap√≥s isso passaram a usar o NTFS, dando suporte ao FAT. O exFAT √© uma extens√£o do FAT32 otimizado para flash drivers e sistemas de arquivos grandes quando o sistema de arquivos NTFS n√£o for uma solu√ß√£o vi√°vel.
+No Linux, h√° mais sistemas de arquivos, os mais usados s√£o EXT3 e EXT4, outros exemplos s√£o ReiserFS, XFS e JSF.
 
-O Windows utiliza as extensıes como forma de saber a qual programa deve execut·-lo, enquanto outros, como o Linux, n„o obriga a necessidade de uma extens„o, podendo ser usada pela demanda do usu·rio.
-Em relaÁ„o a caracteres:
-Os sistemas FAT n„o s„o case sensitive, sendo que o FAT-16 suporta nomes de atÈ 8 caracteres mais extens„o de 1 a 3 caracteres e o FAT-32 suporta nomes de atÈ 256 bits.
-O NTFS utiliza caracteres Unicode, diferentemente do FAT que usa ASCII, apresenta suporte a criptografia e seguranÁa.
-O ext4 apresenta compatibilidade com o ext3 e tambÈm apresenta novos recursos de confiabilidade e desempenho, como a utilizaÁ„o de estruturas mais r·pidas na organizaÁ„o de diretÛrios e reduÁ„o de fragmentaÁ„o de arquivos.
- 
+O Windows utiliza as extens√µes como forma de saber a qual programa deve execut√°-lo, enquanto outros, como o Linux, n√£o obriga a necessidade de uma extens√£o, podendo ser usada pela demanda do usu√°rio.
+Em rela√ß√£o a caracteres:
+Os sistemas FAT n√£o s√£o case sensitive, sendo que o FAT-16 suporta nomes de at√© 8 caracteres mais extens√£o de 1 a 3 caracteres e o FAT-32 suporta nomes de at√© 256 bits.
+O NTFS utiliza caracteres Unicode, diferentemente do FAT que usa ASCII, apresenta suporte a criptografia e seguran√ßa.
+O ext4 apresenta compatibilidade com o ext3 e tamb√©m apresenta novos recursos de confiabilidade e desempenho, como a utiliza√ß√£o de estruturas mais r√°pidas na organiza√ß√£o de diret√≥rios e redu√ß√£o de fragmenta√ß√£o de arquivos.
 
-ReferÍncias: livro do Tanembaun
+
+2) Existem quatro tipos de problemas que podem ocorrer na execu√ß√£o de processos concorrentes: trancamento (lockout), impasse (deadlock), inani√ß√£o (starvation) e indeterminismo. Explique cada um deles dando exemplos de situa√ß√µes onde podem ocorrer.
+Trancamento (lockout): v√°rios processos aguardando um evento (recurso ocupado), reduzindo o desempenho. Um exemplo seria a fila de impress√£o com muitos processos nela esperando;
+Impasse(deadlock): quando um conjunto de processos aguardam uma a√ß√£o que somente outro processo do conjunto pode causar. Um exemplo seria quando o processo de um conjunto aguarda que o outro libere recurso para que possa ser executado, por√©m, como todos est√£o esperando recursos, nenhum ser√° executado e causar√° impasse;
+Inani√ß√£o(starvation): quando um processo nunca executar√° devido a pol√≠tica de compartilhamento de recursos do sistema operacional. Um exemplo seria uma pol√≠tica que escolhe oferecer recurso para processos com menos exig√™ncia desse recurso, caso um processo exija bastante recurso, √© poss√≠vel que ele n√£o seja executado devido a pol√≠tica;
+Indeterminismo: quando o n√£o conhecimento da ordem de acesso a um recurso compartilhado gera resultados n√£o esperado. Isso pode acontecer quando threads tentam acessar um recurso compartilhado em que uma est√° alterando uma vari√°vel antes de ser lida pela outra gerando resultado n√£o desejado.
+
+
+Refer√™ncias: livro do Tanembaun
 https://www.techtudo.com.br/dicas-e-tutoriais/noticia/2016/02/entenda-o-que-e-sistema-de-arquivos-e-sua-utilidade-no-pc-e-no-celular.html
 https://pt.wikipedia.org/wiki/ExFAT
 https://pt.wikipedia.org/wiki/File_Allocation_Table

@@ -1,3 +1,0 @@
-Trancamento (lockout): vários processos aguardando um evento (recurso ocupado), reduzindo o desempenho. Um exemplo seria a fila de impressão com muitos processos nela esperando;
-
-Impasse(deadlock): quando um conjunto de processos aguardam uma ação que somente outro processo do conjunto pode causar. Um exemplo seria quando o processo de um conjunto aguarda que o outro libere recurso para que possa ser executado, porém, como todos estão esperando recursos, nenhum será executado e causará impasse;
