@@ -11,7 +11,7 @@ O ext4 apresenta compatibilidade com o ext3 e também apresenta novos recursos d
 
 
 2) Existem quatro tipos de problemas que podem ocorrer na execução de processos concorrentes: trancamento (lockout), impasse (deadlock), inanição (starvation) e indeterminismo. Explique cada um deles dando exemplos de situações onde podem ocorrer.
-Trancamento (lockout): vários processos aguardando um evento (recurso ocupado), reduzindo o desempenho. Um exemplo seria a fila de impressão com muitos processos nela esperando;
+Trancamento (lockout): quando vários processos aguardam um evento (liberar um recurso ocupado), reduzindo o desempenho. Um exemplo seria a fila de impressão com muitos processos nela esperando;
 Impasse(deadlock): quando um conjunto de processos aguardam uma ação que somente outro processo do conjunto pode causar. Um exemplo seria quando o processo de um conjunto aguarda que o outro libere recurso para que possa ser executado, porém, como todos estão esperando recursos, nenhum será executado e causará impasse;
 Inanição(starvation): quando um processo nunca executará devido a política de compartilhamento de recursos do sistema operacional. Um exemplo seria uma política que escolhe oferecer recurso para processos com menos exigência desse recurso, caso um processo exija bastante recurso, é possível que ele não seja executado devido a política;
 Indeterminismo: quando o não conhecimento da ordem de acesso a um recurso compartilhado gera resultados não esperado. Isso pode acontecer quando threads tentam acessar um recurso compartilhado em que uma está alterando uma variável antes de ser lida pela outra gerando resultado não desejado.
