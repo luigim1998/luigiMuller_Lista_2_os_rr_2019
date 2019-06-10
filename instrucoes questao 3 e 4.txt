@@ -1,0 +1,13 @@
+A questão 3 e 4 foram executados no sistema operacional "Ubuntu 18.04.2 LTS" no kernel "4.15.0-51-generic"
+
+QUESTÃO 3:
+
+A questão 3 foi compilada com o seguinte comando:
+gcc questao_3.c -o questao_3.out -pthread
+
+E executada com o seguinte comando:
+./questao_3.out > saida_questao_3.txt
+
+Esse comando executa o camndo e joga a saída para o arquivo "saida_questao_3.txt"
+
+QUESTÃO 4:
