@@ -1,12 +1,11 @@
 /**
- * @file   testebbchar.c
- * @author Derek Molloy
- * @date   7 April 2015
+ * @file   TODO_USER.c
+ * @author Luigi Muller
+ * @date   11 June 2019
  * @version 0.1
- * @brief  A Linux user space program that communicates with the ebbchar.c LKM. It passes a
- * string to the LKM and reads the response from the LKM. For this example to work the device
- * must be called /dev/ebbchar.
- * @see http://www.derekmolloy.ie/ for a full description and follow-up descriptions.
+ * @brief  A user space program to support a task list that will run as an LKM.
+ * This code is based on Derek Molloy's code.
+ * @see http://www.derekmolloy.ie/ for the base code.
 */
 #include<stdio.h>
 #include<stdlib.h>
@@ -15,37 +14,38 @@
 #include<string.h>
 #include<unistd.h>
 
-#define BUFFER_LENGTH 256               ///< The buffer length (crude but fine)
+#define BUFFER_LENGTH 1200              ///< The buffer length (crude but fine)
 static char receive[BUFFER_LENGTH];     ///< The receive buffer from the LKM
 
 int main(){
    int ret, fd;
-   char stringToSend[BUFFER_LENGTH];
+   char stringToSend[256];
    printf("Starting device test code example...\n");
-   fd = open("/dev/ebbchar", O_RDWR);             // Open the device with read/write access
+   fd = open("/dev/TODO_LIST", O_RDWR);             // Open the device with read/write access
    if (fd < 0){
-      perror("Failed to open the device...");
+      perror("Falha em abrir dispositivo...");
       return errno;
    }
-   printf("Type in a short string to send to the kernel module:\n");
-   scanf("%[^\n]%*c", stringToSend);                // Read in a string (with spaces)
-   printf("Writing message to the device [%s].\n", stringToSend);
-   ret = write(fd, stringToSend, strlen(stringToSend)); // Send the string to the LKM
-   if (ret < 0){
-      perror("Failed to write the message to the device.");
-      return errno;
-   }
-
-   printf("Press ENTER to read back from the device...\n");
+   printf("Pressione ENTER para inserir as cinco tarefas para guardar na lista no LKM:\n");
    getchar();
 
-   printf("Reading from the device...\n");
-   ret = read(fd, receive, BUFFER_LENGTH);        // Read the response from the LKM
-   if (ret < 0){
-      perror("Failed to read the message from the device.");
+   printf("Escrevendo as tarefas no dispositivo.\n");
+   ret = write(fd, NULL, 0); // Send the string to the LKM
+   if (ret < 0) {
+      perror("Falha em escrever no dispositivo.");
       return errno;
    }
-   printf("The received message is: [%s]\n", receive);
-   printf("End of the program\n");
+
+   printf("Pressione ENTER para ler as tarefas para fazer...\n");
+   getchar();
+
+   printf("Lendo do dispositivo...\n");
+   ret = read(fd, receive, BUFFER_LENGTH);        // Read the response from the LKM
+   if (ret < 0){
+      perror("Falha em ler a mensagem do dispositivo.");
+      return errno;
+   }
+   printf("Mensagem do dispositivo: [%s]\n", receive);
+   printf("Fim do programa, TCHAU\n");
    return 0;
 }
