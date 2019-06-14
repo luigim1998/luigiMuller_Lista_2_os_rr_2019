@@ -1,4 +1,4 @@
-1) Explique a função dos Sistemas de Arquivos. Adicionalmente, descreva a diferença entre o sistema de arquivos do linux e do windows.
+﻿1) Explique a função dos Sistemas de Arquivos. Adicionalmente, descreva a diferença entre o sistema de arquivos do linux e do windows.
 É a parte do sistema operacional que lida com os arquivos. Ele fica responsável pela organização dos arquivos no disco, estrutura, forma de acesso, uso e como deve ser nomeado os arquivos.
 No Windows 95, é usado o FAT16, o Windows 98 introduziu o FAT32 e os sistemas Windows após isso passaram a usar o NTFS, dando suporte ao FAT. O exFAT é uma extensão do FAT32 otimizado para flash drivers e sistemas de arquivos grandes quando o sistema de arquivos NTFS não for uma solução viável.
 No Linux, há mais sistemas de arquivos, os mais usados são EXT3 e EXT4, outros exemplos são ReiserFS, XFS e JSF.
@@ -23,3 +23,4 @@ https://pt.wikipedia.org/wiki/ExFAT
 https://pt.wikipedia.org/wiki/File_Allocation_Table
 https://pt.wikipedia.org/wiki/NTFS
 https://www.ibm.com/developerworks/br/library/l-anatomy-ext4/index.html
+derekmolloy.ie/writing-a-linux-kernel-module-part-2-a-character-device/

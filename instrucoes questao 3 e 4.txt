@@ -11,3 +11,11 @@ E executada com o seguinte comando:
 Esse comando executa o camndo e joga a saída para o arquivo "saida_questao_3.txt"
 
 QUESTÃO 4:
+
+A questão 4 é compilada com os seguinte comando:
+gcc TODO_USER.c -o test
+make
+
+O primeiro comando compila o TODO_USER.c que é o programa
+que será executado no espaço de usuário e o segundo compila
+o TODO_LKM.c que será o módulo executado no kernel.
