@@ -16,7 +16,7 @@
 #include <linux/uaccess.h>        // Required for the copy to user function
 #include <linux/list.h>           // Required for task list
 #include <linux/string.h>         // Required for string functions
-#include <linux/slab.h>
+#include <linux/slab.h>           // Required for kmalloc function
 
 #define  DEVICE_NAME "TODO_LIST"    ///< The device will appear at /dev/ebbchar using this value
 #define  CLASS_NAME  "todo"        ///< The device class -- this is a character device driver
@@ -43,7 +43,7 @@ static ssize_t dev_read(struct file *, char *, size_t, loff_t *);
 //static ssize_t dev_write(struct file *, const char *, size_t, loff_t *);
 static ssize_t dev_write(struct file *filep, const char *buffer, size_t len, loff_t *offset);
 /**
- * @brief A estrutura conterá a descrição da tarefa a ser feita e uma struct da lista.
+ * @brief The structure will contain the description of the task to be done and a struct from the list.
 */
 struct todo_list {
     char descricao[256];
@@ -70,38 +70,38 @@ static struct file_operations fops ={
  *  @return returns 0 if successful
  */
 static int __init todo_init(void) {
-    printk(KERN_INFO "Iniciando o TODO list em LKM\n");
+    printk(KERN_INFO "TODO LKM: iniciando o TODO list em LKM\n");
 
     // Try to dynamically allocate a major number for the device -- more difficult but worth it
     majorNumber = register_chrdev(0, DEVICE_NAME, &fops);
     if (majorNumber < 0) {
-        printk(KERN_ALERT "TODO list: falhou em registrar um major number\n");
+        printk(KERN_ALERT "TODO LKM: falhou em registrar um major number\n");
         return majorNumber;
     }
-    printk(KERN_INFO "TODO list registrado com o major number %d\n", majorNumber);
+    printk(KERN_INFO "TODO LKM: major number registrado como %d\n", majorNumber);
 
     // Register the device class
     ebbcharClass = class_create(THIS_MODULE, CLASS_NAME);
     if (IS_ERR(ebbcharClass)) {                // Check for error and clean up if there is
         unregister_chrdev(majorNumber, DEVICE_NAME);
-        printk(KERN_ALERT "Falha em registrar a classe do dispositivo\n");
+        printk(KERN_ALERT "TODO LKM: falha em registrar a classe do dispositivo\n");
         return PTR_ERR(ebbcharClass);          // Correct way to return an error on a pointer
     }
-    printk(KERN_INFO "TODO list: classe do dispositivo registrado corretamente\n");
+    printk(KERN_INFO "TODO LKM: classe do dispositivo registrado corretamente\n");
 
     // Register the device driver
     ebbcharDevice = device_create(ebbcharClass, NULL, MKDEV(majorNumber, 0), NULL, DEVICE_NAME);
     if (IS_ERR(ebbcharDevice)) {               // Clean up if there is an error
         class_destroy(ebbcharClass);           // Repeated code but the alternative is goto statements
         unregister_chrdev(majorNumber, DEVICE_NAME);
-        printk(KERN_ALERT "Falha em criar o dispositivo\n");
+        printk(KERN_ALERT "TODO LKM: falha em criar o dispositivo\n");
         return PTR_ERR(ebbcharDevice);
     }
-    printk(KERN_INFO "TODO list: dispositivo criado corretamente\n"); // Made it! device was initialized
+    printk(KERN_INFO "TODO LKM: dispositivo criado corretamente\n"); // Made it! device was initialized
 
     INIT_LIST_HEAD( &todo_head.list ); //inicia a lista
 
-    printk(KERN_INFO "TODO list: todo list head foi inicializado\n"); // todo_head was initialized
+    printk(KERN_INFO "TODO LKM: todo list head foi inicializado\n"); // todo_head was initialized
 
     return 0;
 }
@@ -121,18 +121,18 @@ static void __exit todo_exit(void) {
 
     list_for_each_safe(pos, q, &todo_head.list ){
         tmp = list_entry(pos, struct todo_list, list);
-        printk("Apagando recado: %s\n", tmp->descricao);
+        printk(KERN_INFO "TODO LKM: apagando recado: %s\n", tmp->descricao);
         list_del(pos);
         kfree(tmp);
     } //Deleting list nodes
-    printk("Provando que esta tudo apagado\n");
+    printk(KERN_INFO "TODO LKM: se nao aparecer mensagem de recado apagado entao a lista esta vazia\n");
     list_for_each_safe(pos, q, &todo_head.list ){
         tmp = list_entry(pos, struct todo_list, list);
-        printk("Apagando recado: %s\n", tmp->descricao);
+        printk(KERN_INFO "TODO LKM: apagando recado: %s\n", tmp->descricao);
         list_del(pos);
         kfree(tmp);
-    } //Deleting list nodes
-    printk(KERN_INFO "TODO list: Saindo de boas do LKM!\n");
+    } //Trying to delete list nodes
+    printk(KERN_INFO "TODO LKM: saindo de boas do kernel!\n");
 }
 
 /** @brief The device open function that is called each time the device is opened
@@ -142,7 +142,7 @@ static void __exit todo_exit(void) {
  */
 static int dev_open(struct inode *inodep, struct file *filep) {
     numberOpens++;
-    printk(KERN_INFO "TODO list: Dispositivo foi aberto %d vez(es)\n", numberOpens);
+    printk(KERN_INFO "TODO LKM: dispositivo foi aberto %d vez(es)\n", numberOpens);
     return 0;
 }
 
@@ -158,7 +158,6 @@ static ssize_t dev_read(struct file *filep, char *buffer, size_t len, loff_t *of
     int error_count = 0;
     struct list_head *pos;
     struct todo_list *tmp;
-    sprintf(message, "LISTA DE TAREFAS:\n");
 
     list_for_each(pos, &todo_head.list ){
 
@@ -172,10 +171,10 @@ static ssize_t dev_read(struct file *filep, char *buffer, size_t len, loff_t *of
     error_count = copy_to_user(buffer, message, size_of_message); // copy_to_user has the format ( * to, *from, size) and returns 0 on success
 
     if (error_count == 0) {            // if true then have success
-        printk(KERN_INFO "TODO list: Enviado %d caracteres para o usuario\n", size_of_message);
+        printk(KERN_INFO "TODO LKM: enviado %d caracteres para o usuario\n", size_of_message);
         return (size_of_message = 0);  // clear the position to the start and return 0
     } else {
-        printk(KERN_ALERT "TODO list: Falha ao enviar %d caracteres para o usuario\n", error_count);
+        printk(KERN_ALERT "TODO LKM: falha ao enviar %d caracteres para o usuario\n", error_count);
         return -EFAULT;              // Failed -- return a bad address message (i.e. -14)
     }
 }
@@ -191,25 +190,45 @@ static ssize_t dev_read(struct file *filep, char *buffer, size_t len, loff_t *of
 static ssize_t dev_write(struct file *filep, const char *buffer, size_t len, loff_t *offset) {
     struct todo_list *tmp;
 
-    tmp = kmalloc(sizeof(struct todo_list), GFP_ATOMIC); //Alocação de memória
-    strcpy(tmp->descricao, "Abrir porta");               //Adiciona a descrição da atividade
-    list_add_tail( &tmp->list, &todo_head.list);              //Adiciona os nodos
+    tmp = kmalloc(sizeof(struct todo_list), GFP_ATOMIC); //Memory allocation
+    if(tmp){
+    	strcpy(tmp->descricao, "Abrir porta");           //Add activity description
+    	list_add_tail( &tmp->list, &todo_head.list);     //Add the nodes
+    } else {
+    	printk(KERN_ALERT "TODO LKM: uma tarefa nao teve espaco alocado\n");
+    }
 
-    tmp = kmalloc(sizeof(struct todo_list), GFP_ATOMIC); //Alocação de memória
-    strcpy(tmp->descricao, "Beber cafe");                //Adiciona a descrição da atividade
-    list_add_tail( &tmp->list, &todo_head.list);              //Adiciona os nodos
+    tmp = kmalloc(sizeof(struct todo_list), GFP_ATOMIC); //Memory allocation
+    if(tmp){
+    	strcpy(tmp->descricao, "Beber cafe");            //Add activity description
+    	list_add_tail( &tmp->list, &todo_head.list);     //Add the nodes
+    } else {
+    	printk(KERN_ALERT "TODO LKM: uma tarefa nao teve espaco alocado\n");
+    }
     
-    tmp = kmalloc(sizeof(struct todo_list), GFP_ATOMIC); //Alocação de memória
-    strcpy(tmp->descricao, "Comer pao");                 //Adiciona a descrição da atividade
-    list_add_tail( &tmp->list, &todo_head.list);              //Adiciona os nodos
-    
-    tmp = kmalloc(sizeof(struct todo_list), GFP_ATOMIC); //Alocação de memória
-    strcpy(tmp->descricao, "Distribuir amor");           //Adiciona a descrição da atividade
-    list_add_tail( &tmp->list, &todo_head.list);              //Adiciona os nodos
-    
-    tmp = kmalloc(sizeof(struct todo_list), GFP_ATOMIC); //Alocação de memória
-    strcpy(tmp->descricao, "Escrever alguma coisa");     //Adiciona a descrição da atividade
-    list_add_tail( &tmp->list, &todo_head.list);              //Adiciona os nodos
+    tmp = kmalloc(sizeof(struct todo_list), GFP_ATOMIC); //Memory allocation
+    if(tmp){
+    	strcpy(tmp->descricao, "Comer lasanha");         //Add activity description
+    	list_add_tail( &tmp->list, &todo_head.list);     //Add the nodes
+    } else {
+    	printk(KERN_ALERT "TODO LKM: uma tarefa nao teve espaco alocado\n");
+    }
+
+    tmp = kmalloc(sizeof(struct todo_list), GFP_ATOMIC); //Memory allocation
+    if(tmp){
+    	strcpy(tmp->descricao, "Dormir");                //Add activity description
+    	list_add_tail( &tmp->list, &todo_head.list);     //Add the nodes
+    } else {
+    	printk(KERN_ALERT "TODO LKM: uma tarefa nao teve espaco alocado\n");
+    }
+
+    tmp = kmalloc(sizeof(struct todo_list), GFP_ATOMIC); //Memory allocation
+    if(tmp){
+    	strcpy(tmp->descricao, "Estudar");               //Add activity description
+    	list_add_tail( &tmp->list, &todo_head.list);     //Add the nodes
+    } else {
+    	printk(KERN_ALERT "TODO LKM: uma tarefa nao teve espaco alocado\n");
+    }
     
     return len;
 }
@@ -220,7 +239,7 @@ static ssize_t dev_write(struct file *filep, const char *buffer, size_t len, lof
  *  @param filep A pointer to a file object (defined in linux/fs.h)
  */
 static int dev_release(struct inode *inodep, struct file *filep) {
-    printk(KERN_INFO "TODO list: Dispositivo fechado corretamente\n");
+    printk(KERN_INFO "TODO LKM: dispositivo fechado corretamente\n");
     return 0;
 }
 

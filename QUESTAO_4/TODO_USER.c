@@ -20,23 +20,23 @@ static char receive[BUFFER_LENGTH];     ///< The receive buffer from the LKM
 int main(){
    int ret, fd;
    char stringToSend[256];
-   printf("Starting device test code example...\n");
+   printf("Comecando o codigo de teste do dispositivo...\n");
    fd = open("/dev/TODO_LIST", O_RDWR);             // Open the device with read/write access
    if (fd < 0){
       perror("Falha em abrir dispositivo...");
       return errno;
    }
-   printf("Pressione ENTER para inserir as cinco tarefas para guardar na lista no LKM:\n");
+   printf("Pressione ENTER para as cinco tarefas serem inseridas no LKM:\n");
    getchar();
 
    printf("Escrevendo as tarefas no dispositivo.\n");
    ret = write(fd, NULL, 0); // Send the string to the LKM
    if (ret < 0) {
-      perror("Falha em escrever no dispositivo.");
+      perror("Falha em escrever no dispositivo.\n");
       return errno;
    }
 
-   printf("Pressione ENTER para ler as tarefas para fazer...\n");
+   printf("Pressione ENTER para ler as tarefas a fazer...\n");
    getchar();
 
    printf("Lendo do dispositivo...\n");

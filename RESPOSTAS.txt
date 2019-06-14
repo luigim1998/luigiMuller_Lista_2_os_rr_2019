@@ -17,10 +17,13 @@ Inanição(starvation): quando um processo nunca executará devido a política d
 Indeterminismo: quando o não conhecimento da ordem de acesso a um recurso compartilhado gera resultados não esperado. Isso pode acontecer quando threads tentam acessar um recurso compartilhado em que uma está alterando uma variável antes de ser lida pela outra gerando resultado não desejado.
 
 
-Referências: livro do Tanembaun
+Referências:
+BOS, Herbert; TANENBAUM, Andrew S.. Sistemas Operacionais Modernos. 4ª Edição. Pearson, 2016. 778 p.
 https://www.techtudo.com.br/dicas-e-tutoriais/noticia/2016/02/entenda-o-que-e-sistema-de-arquivos-e-sua-utilidade-no-pc-e-no-celular.html
 https://pt.wikipedia.org/wiki/ExFAT
 https://pt.wikipedia.org/wiki/File_Allocation_Table
 https://pt.wikipedia.org/wiki/NTFS
 https://www.ibm.com/developerworks/br/library/l-anatomy-ext4/index.html
-derekmolloy.ie/writing-a-linux-kernel-module-part-2-a-character-device/
+http://derekmolloy.ie/writing-a-linux-kernel-module-part-2-a-character-device/
+http://isis.poly.edu/kulesh/stuff/src/klist/
+http://tuxthink.blogspot.com/2014/02/creating-linked-list-in-liinux-kernel.html

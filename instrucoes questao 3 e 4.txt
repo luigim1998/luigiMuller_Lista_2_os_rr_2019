@@ -25,3 +25,5 @@ sudo insmod TODO_LKM.ko
 sudo ./test
 
 Pressione ENTER para ele inserir as tarefas dentro do módulo no kernel. E pressione ENTER para ele enviar as tarefas do módulo para o usuário. Ele exibirá as tarefas no terminal normalmente e encerrará o programa automaticamente.
+
+sudo rmmod TODO_LKM
